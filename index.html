@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
+  <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+ </head>
+ <body>
+  <h1>Falconry</h1>
+  <h2>Queues</h2>
+  <div class="tablemod">
+   <form class="form-inline">
+    <fieldset>
+     <label>Host</label>
+     <input type="text" name="host" value="http://127.0.0.1:2223/stats.json">
+     <label>Name Filter</label>
+     <input type="text" name="filter" placeholder="foo*">
+     <label>Refresh Time (s)</label>
+     <input type="text" name="refresh" value="5">
+     <button class="btn btn-primary" type="submit">Submit</button>
+    </fieldset>
+   </form>
+  </div>
+  <div id="data" class=""></div>
+  <script>
+  
+    function bytesToHuman(o)  {  
+        var precision = 0;
+        var kilobyte  = 1024;
+        var megabyte  = kilobyte * 1024;
+        var gigabyte  = megabyte * 1024;
+        var terabyte  = gigabyte * 1024;
+
+        var bytes = o.value;
+
+        if ((bytes >= 0) && (bytes < kilobyte)) {
+            return bytes + ' B';
+        } else if ((bytes >= kilobyte) && (bytes < megabyte)) {
+            return (bytes / kilobyte).toFixed(precision) + ' KB';
+        } else if ((bytes >= megabyte) && (bytes < gigabyte)) {
+            return (bytes / megabyte).toFixed(precision) + ' MB';
+        } else if ((bytes >= gigabyte) && (bytes < terabyte)) {
+            return (bytes / gigabyte).toFixed(precision) + ' GB';
+        } else if (bytes >= terabyte) {
+            return (bytes / terabyte).toFixed(precision) + ' TB';
+        } else {
+            return bytes + ' B';
+        }
+    }
+  
+    function addCommas(o) {
+        var nStr = o.value;
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+  
+  
+    YUI().use("datasource", "datasource-get", "datasource-jsonschema", "datatable-base", "datatable-datasource", "datatable-sort", "model", "model-list", function (Y) {
+
+        var myDataSource = new Y.DataSource.Get({
+          source: 'http://127.0.0.1:2223/stats.json?'
+        });
+        // var myDataSource = new Y.DataSource.Function({
+        //     source: function (request) {
+        //         Y.log("hello world!");
+        //         // This should really be a JSONP request.
+        //         return [{"age_msec":0,"bytes":0,"discarded":0,"name":"on-demand-sql-4195","total_items":11111,"open_transactions":1,"expired_items":5,"mem_items":0,"waiters":2,"journal_size":1727087,"mem_bytes":0,"items":0},{"bytes":0,"age_msec":0,"discarded":0,"name":"nagios-on-demand-sql-4170-response-ab80b953ac6b6d0c797d449e7ebe3bd5","total_items":2,"open_transactions":0,"expired_items":2,"waiters":0,"mem_items":0,"journal_size":0,"items":0,"mem_bytes":0},{"age_msec":0,"bytes":0,"discarded":0,"name":"on-demand-sql-4335","total_items":11457,"open_transactions":7,"expired_items":11,"mem_items":0,"waiters":2,"journal_size":1789172,"items":0,"mem_bytes":0},{"age_msec":0,"bytes":0,"discarded":0,"name":"on-demand-sql-0","total_items":523,"open_transactions":1,"expired_items":5,"waiters":2,"mem_items":0,"journal_size":0,"items":0,"mem_bytes":0},{"age_msec":0,"bytes":0,"discarded":0,"name":"on-demand-sql-4210","total_items":4364,"open_transactions":4,"expired_items":17,"mem_items":0,"waiters":2,"journal_size":630379,"mem_bytes":0,"items":0},{"age_msec":0,"bytes":0,"discarded":0,"name":"on-demand-sql-4180","total_items":27823,"open_transactions":0,"expired_items":5,"waiters":2,"mem_items":0,"journal_size":4958640,"mem_bytes":0,"items":0},{"bytes":0,"age_msec":0,"discarded":0,"name":"on-demand-sql-4645","total_items":21748,"open_transactions":2,"expired_items":6,"mem_items":0,"waiters":2,"journal_size":3879965,"items":0,"mem_bytes":0},{"age_msec":0,"bytes":0,"discarded":0,"name":"on-demand-sql-4518","total_items":35805,"open_transactions":0,"expired_items":5,"mem_items":0,"waiters":2,"journal_size":6490590,"mem_bytes":0,"items":0},{"bytes":0,"age_msec":0,"discarded":0,"name":"response-net-kestrel-88f94582da4594d19a69044a1ba4e78b","total_items":0,"open_transactions":0,"expired_items":0,"mem_items":0,"waiters":0,"journal_size":0,"items":0,"mem_bytes":0},{"bytes":0,"age_msec":0,"discarded":0,"name":"on-demand-sql-4200","total_items":25273,"open_transactions":0,"expired_items":18,"mem_items":0,"waiters":2,"journal_size":4586670,"items":0,"mem_bytes":0},{"bytes":0,"age_msec":0,"discarded":0,"name":"on-demand-sql-4365","total_items":19944,"open_transactions":10,"expired_items":21,"waiters":2,"mem_items":0,"journal_size":3507106,"items":0,"mem_bytes":0},{"age_msec":0,"bytes":0,"discarded":0,"name":"on-demand-sql-4110","total_items":22608,"open_transactions":1,"expired_items":7,"mem_items":0,"waiters":2,"journal_size":4039704,"items":0,"mem_bytes":0},{"age_msec":0,"bytes":0,"discarded":0,"name":"on-demand-sql-4170","total_items":32939,"open_transactions":10,"expired_items":19,"mem_items":0,"waiters":2,"journal_size":5901826,"mem_bytes":0,"items":0},{"age_msec":0,"bytes":0,"discarded":0,"name":"on-demand-sql-2610","total_items":17870,"open_transactions":2,"expired_items":5,"mem_items":0,"waiters":2,"journal_size":2864247,"items":0,"mem_bytes":0},{"age_msec":0,"bytes":0,"discarded":0,"name":"on-demand-sql-3120","total_items":22382,"open_transactions":0,"expired_items":6,"mem_items":0,"waiters":2,"journal_size":3999923,"items":0,"mem_bytes":0},{"bytes":0,"age_msec":0,"discarded":0,"name":"on-demand-sql-4205","total_items":18529,"open_transactions":7,"expired_items":9,"mem_items":0,"waiters":2,"journal_size":3202262,"mem_bytes":0,"items":0},{"bytes":0,"age_msec":0,"discarded":0,"name":"on-demand-sql-4630","total_items":34673,"open_transactions":1,"expired_items":5,"waiters":2,"mem_items":0,"journal_size":6254916,"mem_bytes":0,"items":0},{"age_msec":0,"bytes":0,"discarded":0,"name":"nagios-on-demand-sql-4200-response-0af25f890908584a3b9b8f3944a81325","total_items":2,"open_transactions":0,"expired_items":2,"waiters":0,"mem_items":0,"journal_size":0,"items":0,"mem_bytes":0},{"bytes":0,"age_msec":0,"discarded":0,"name":"on-demand-sql-4130","total_items":11677,"open_transactions":0,"expired_items":5,"waiters":2,"mem_items":0,"journal_size":1825633,"mem_bytes":0,"items":0},{"bytes":0,"age_msec":0,"discarded":0,"name":"on-demand-sql-4135","total_items":26390,"open_transactions":0,"expired_items":79,"mem_items":0,"waiters":0,"journal_size":4581816,"mem_bytes":0,"items":0},{"bytes":0,"age_msec":0,"discarded":0,"name":"on-demand-sql-4150","total_items":19063,"open_transactions":0,"expired_items":5,"waiters":2,"mem_items":0,"journal_size":3330269,"items":0,"mem_bytes":0}];
+        //     }
+        // });
+        myDataSource.plug(Y.Plugin.DataSourceJSONSchema, {
+            schema: {
+                resultFields: [ "name", "items", "total_items", "discarded", "waiters", "open_transactions", "bytes", "journal_size" ]
+            }
+        })
+
+        var cols = [
+            { key: "name", label: "Name", sortable: true },
+            { key: "items", label: "Item Count", sortable: true },
+            { key: "total_items", label: "Total Items", sortable: true, formatter: addCommas },
+            { key: "discarded", label: "Discarded", sortable: true, formatter: addCommas },
+            { key: "waiters", label: "Waiters", sortable: true, formatter: addCommas },
+            { key: "open_transactions", label: "Open Transactions", sortable: true, formatter: addCommas },
+            { key: "bytes", label: "Bytes", sortable: true, formatter: bytesToHuman },
+            { key: "journal_size", label: "Journal Size", sortable: true, formatter: bytesToHuman }
+        ];
+
+        var table = new Y.DataTable.Base({
+             columnset: cols,
+             plugins: [ Y.Plugin.DataTableSort ]
+         });
+         table.plug(Y.Plugin.DataTableDataSource, {
+             datasource: myDataSource,
+             initialRequest: ""
+         }).render("#data");
+
+         // commented out for now
+         // myDataSource.setInterval(1000, {
+         //     callback: {
+         //         success: Y.bind(table.datasource.onDataReturnInitializeTable, table.datasource),
+         //         success: Y.bind(table.datasource.onDataReturnInitializeTable, table.datasource)
+         //     } 
+         //  });
+     });
+     </script>
+     <div class="">
+      <h2>Global Stats</h2>
+      <div class="yui3-g global">
+
+       <div class="row">
+        <div class="yui3-u-1-4">
+         <label>Version:</label><span>version</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Uptime:</label><span>uptime</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Queues Created:</label><span>queue_creates</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Queues Deleted:</label><span>queue_deletes</span>
+        </div>
+       </div>
+
+       <div class="row">
+        <div class="yui3-u-1-4">
+         <label>Current Items:</label><span>curr_items</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Total Items:</label><span>total_items</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Current Connections:</label><span>curr_connections</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Total Connections:</label><span>total_connections</span>
+        </div>
+       </div>
+
+       <div class="row">
+        <div class="yui3-u-1-4">
+         <label>Bytes:</label><span>bytes</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Get Commands:</label><span>cmd_get</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Set Commands:</label><span>cmd_set</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Peek Commands:</label><span>cmd_peek</span>
+        </div>
+       </div>
+
+       <div class="row">
+        <div class="yui3-u-1-4">
+         <label>Get Hits:</label><span>get_hits</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Get Misses:</label><span>get_misses</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Bytes Read:</label><span>bytes_read</span>
+        </div>
+        <div class="yui3-u-1-4">
+         <label>Bytes Written:</label><span>bytes_written</span>
+        </div>
+       </div>
+      </div>
+     </div>
+     <h2>Features</h2>
+     <ul>   
+      <li>configurable refresh timer w/progress bar</li>
+      <li>highlight changed cells</li>
+      <li>sparklines</li>
+      <li>queue name filters</li>
+      <li>footer with totals</li>
+     </ul>
+     <h2>A Form</h2>
+     <form>
+      <fieldset>
+       <div class="field yui3-g">
+        <div class="yui3-u-1-8">
+         <label>A Label</label>
+        </div>
+        <div class="yui3-u-7-8">
+         <input type="text">
+        </div>
+       </div>
+       <div class="field yui3-g">
+        <div class="yui3-u-1-8">
+         <label>Another Label</label>
+        </div>
+        <div class="yui3-u-7-8">
+         <input type="text" class="wide">
+        </div>
+       </div>
+       <div class="field submit yui3-g">
+        <div class="yui3-u-1-8">
+         <a class="button mute">Cancel</a>
+        </div>
+        <div class="yui3-u-7-8">
+         <input type="submit" value="Submit">
+        </div>
+       </div>
+      </fieldset>
+     </form>
+ </body>
+</html>
