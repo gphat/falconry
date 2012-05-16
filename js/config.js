@@ -8,7 +8,7 @@ var YUI_config = {
       filter   : 'raw',
       modules  : {
         'falconry-models' : {
-          path : 'falconry-models.js'
+          path : 'falconry-models.js',
           requires : [ 'model', 'model-list', 'gallery-model-sync-rest' ]
         }
       }
