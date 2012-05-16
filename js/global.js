@@ -52,7 +52,7 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', f
   var table = new Y.DataTable.Base({
      columnset: cols,
      plugins: [ Y.Plugin.DataTableSort ],
-     data: new Y.QueueModelList()
+     data: new Y.QueueList()
    });
   table.render("#data");
 });
