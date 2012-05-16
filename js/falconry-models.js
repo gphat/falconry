@@ -1,6 +1,6 @@
 YUI.add('falconry-models', function(Y) {
-    //var QueueModel, QueueList,
-        
+    var isFunction = Y.Lang.isFunction;
+
     Y.QueueModel = Y.Base.create('queueModel', Y.Model, [ ], {
     }, {
       ATTRS: {
@@ -26,7 +26,7 @@ YUI.add('falconry-models', function(Y) {
     });
     
     Y.QueueList = Y.Base.create('queueModelList', Y.ModelList, [], {
-      url   : function() { alert('asd'); Y.one('#host').get('value'); },
+      url   : function() { return Y.one('#host').get('value'); },
       model : Y.QueueModel,
       parse : function(response) {
 
@@ -65,6 +65,12 @@ YUI.add('falconry-models', function(Y) {
     
         return results;
       },
+
+      buildQuery : function(options) {
+        // I presume this is `filtered by`.
+        return this.url();
+      },
+
       sync : function (action, options, callback) {
         isFunction(callback) || (callback = noop);
         // Only read is supported.
@@ -82,6 +88,7 @@ YUI.add('falconry-models', function(Y) {
             return callback(null, results.response);
         }
 
+        Y.log('Query: ' + query);
         Y.jsonp(query, function(r){
             if (r.error) {
                 callback(r.error, r);
@@ -96,7 +103,7 @@ YUI.add('falconry-models', function(Y) {
                 callback(null, results);
             }
         });
-          }
+      }
     });
 }, '0.1.0', {
   requires : [ 'model', 'model-list' ]

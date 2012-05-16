@@ -1,4 +1,7 @@
-var YUI_config = {
+var
+filter    = (window.location.search.match(/[?&]filter=([^&]+)/) || [])[1] || 'min',
+YUI_config = {
+  filter : filter,
   groups : {
     falconry : {
       combine  : false,
