@@ -25,8 +25,8 @@ YUI.add('falconry-models', function(Y) {
       }
     });
     
-    Y.QueueList = Y.Base.create('queueModelList', Y.ModelList, [ Y.ModelSync.REST ], {
-      url   : 'http://where.do.i.get.this/',
+    Y.QueueList = Y.Base.create('queueModelList', Y.ModelList, [], {
+      url   : function() { alert('asd'); Y.one('#host').get('value'); },
       model : Y.QueueModel,
       parse : function(response) {
 
@@ -64,10 +64,42 @@ YUI.add('falconry-models', function(Y) {
         }
     
         return results;
-      }
+      },
+      sync : function (action, options, callback) {
+        isFunction(callback) || (callback = noop);
+        // Only read is supported.
+        if (action !== 'read') {
+            // TODO: return some error dingus here.
+            return callback(null);
+        }
+
+        var query   = this.buildQuery(options),
+            cache   = this.cache,
+            results = cache && cache.retrieve(query);
+
+        // Return cached results if we got ’em.
+        if (results) {
+            return callback(null, results.response);
+        }
+
+        Y.jsonp(query, function(r){
+            if (r.error) {
+                callback(r.error, r);
+            } else {
+                results = r.query.results;
+
+                // Cache the results.
+                if (cache && results) {
+                    cache.add(query, results);
+                }
+
+                callback(null, results);
+            }
+        });
+          }
     });
 }, '0.1.0', {
-  requires : [ 'model', 'model-list', 'gallery-model-sync-rest' ]
+  requires : [ 'model', 'model-list' ]
 });
 
 

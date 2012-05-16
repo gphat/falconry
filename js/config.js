@@ -1,5 +1,4 @@
 var YUI_config = {
-  gallery: "gallery-2012.03.23-18-00",
   groups : {
     falconry : {
       combine  : false,
@@ -9,7 +8,7 @@ var YUI_config = {
       modules  : {
         'falconry-models' : {
           path : 'falconry-models.js',
-          requires : [ 'model', 'model-list', 'gallery-model-sync-rest' ]
+          requires : [ 'model', 'model-list', 'jsonp', 'jsonp-url' ]
         }
       }
     }
