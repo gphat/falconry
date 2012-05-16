@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
+  <script src="../js/global.js"></script>
+ </head>
+ <body>
+   <div id="log"></div>
+ </body>
+</html>
+<script>
+YUI().use('test', 'test-console', function(Y) {
+
+  var testCase = new Y.Test.Case({
+    
+    name        : "TestCase Name",
+    testParser  : function () {
+    
+      var data = {"counters":{"jvm_gc_PS_MarkSweep_cycles":0,"jvm_gc_PS_MarkSweep_msec":0,"jvm_gc_PS_Scavenge_cycles":1,"jvm_gc_PS_Scavenge_msec":4,"jvm_gc_cycles":1,"jvm_gc_msec":4,"q\/on-demand-sql-4630\/discarded":0,"q\/on-demand-sql-4630\/expired_items":0,"q\/on-demand-sql-4630\/get_items_hit":0,"q\/on-demand-sql-4630\/get_items_miss":0,"q\/on-demand-sql-4630\/put_bytes":0,"q\/on-demand-sql-4630\/put_items":0,"q\/on-demand-sql-4630\/total_flushes":0,"q\/on-demand-sql-4630\/total_items":0,"q\/test-net-kestrel\/discarded":0,"q\/test-net-kestrel\/expired_items":0,"q\/test-net-kestrel\/get_items_hit":0,"q\/test-net-kestrel\/get_items_miss":0,"q\/test-net-kestrel\/put_bytes":9135,"q\/test-net-kestrel\/put_items":185,"q\/test-net-kestrel\/total_flushes":0,"q\/test-net-kestrel\/total_items":185,"queue_creates":2},"gauges":{"bytes":8640,"connections":0,"items":178,"jvm_fd_count":84,"jvm_fd_limit":10240,"jvm_heap_committed":257294336,"jvm_heap_max":954466304,"jvm_heap_used":13951112,"jvm_nonheap_committed":29233152,"jvm_nonheap_max":136314880,"jvm_nonheap_used":27394752,"jvm_num_cpus":8,"jvm_post_gc_PS_Eden_Space_used":0,"jvm_post_gc_PS_Old_Gen_used":0,"jvm_post_gc_PS_Perm_Gen_used":0,"jvm_post_gc_PS_Survivor_Space_used":2015248,"jvm_post_gc_used":2015248,"jvm_start_time":1337111286853,"jvm_thread_count":15,"jvm_thread_daemon_count":8,"jvm_thread_peak_count":15,"jvm_uptime":1220599,"kestrel-memcache\/connections":0,"kestrel-memcache\/pending":0,"kestrel-text\/connections":0,"kestrel-text\/pending":0,"kestrel-thrift\/connections":0,"kestrel-thrift\/pending":0,"q\/on-demand-sql-4630\/age_msec":0,"q\/on-demand-sql-4630\/bytes":0,"q\/on-demand-sql-4630\/create_time":1337111287,"q\/on-demand-sql-4630\/items":0,"q\/on-demand-sql-4630\/journal_size":0,"q\/on-demand-sql-4630\/mem_bytes":0,"q\/on-demand-sql-4630\/mem_items":0,"q\/on-demand-sql-4630\/open_transactions":0,"q\/on-demand-sql-4630\/waiters":0,"q\/test-net-kestrel\/age_msec":4343522585,"q\/test-net-kestrel\/bytes":8640,"q\/test-net-kestrel\/create_time":1337111287,"q\/test-net-kestrel\/items":178,"q\/test-net-kestrel\/journal_size":13090,"q\/test-net-kestrel\/mem_bytes":8640,"q\/test-net-kestrel\/mem_items":178,"q\/test-net-kestrel\/open_transactions":0,"q\/test-net-kestrel\/waiters":0,"reserved_memory_ratio":0.2812414171930788},"labels":{},"metrics":{}};
+      var list = new Y.QueueList();
+      var result = list.parse( data );
+    
+      Y.ObjectAssert.hasKeys([ 'test-net-kestrel', 'on-demand-sql-4630' ], result, 'has right queues' );
+    }
+  });
+  new Y.Test.Console().render('#log');
+  Y.Test.Runner.add(testCase);
+  Y.Test.Runner.run();
+});
+</script>

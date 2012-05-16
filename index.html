@@ -2,20 +2,20 @@
 <html>
  <head>
   <script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
+  <script src="js/global.js"></script>
   <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
  </head>
  <body>
   <h1>Falconry</h1>
   <h2>Queues</h2>
-  <div class="tablemod">
+  <div class="well">
    <form class="form-inline">
     <fieldset>
-     <label>Host</label>
-     <input type="text" name="host" value="http://127.0.0.1:2223/stats.json">
-     <label>Name Filter</label>
-     <input type="text" name="filter" placeholder="foo*">
-     <label>Refresh Time (s)</label>
-     <input type="text" name="refresh" value="5">
+     <input type="text" id="host" name="host" value="http://127.0.0.1:2223/stats.json">
+     filtered by
+     <input type="text" id="filter" name="filter" placeholder="foo*">
+     every
+     <input type="text" id="refresh" name="refresh" value="5">(s)
      <button class="btn btn-primary" type="submit">Submit</button>
     </fieldset>
    </form>
@@ -92,12 +92,14 @@
 
         var table = new Y.DataTable.Base({
              columnset: cols,
-             plugins: [ Y.Plugin.DataTableSort ]
+             plugins: [ Y.Plugin.DataTableSort ],
+             data: new Y.QueueModelList()
          });
-         table.plug(Y.Plugin.DataTableDataSource, {
-             datasource: myDataSource,
-             initialRequest: ""
-         }).render("#data");
+         table.render("#data");
+         // table.plug(Y.Plugin.DataTableDataSource, {
+         //     datasource: myDataSource,
+         //     initialRequest: ""
+         // }).render("#data");
 
          // commented out for now
          // myDataSource.setInterval(1000, {
@@ -113,61 +115,61 @@
       <div class="yui3-g global">
 
        <div class="row">
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Version:</label><span>version</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Uptime:</label><span>uptime</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Queues Created:</label><span>queue_creates</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Queues Deleted:</label><span>queue_deletes</span>
         </div>
        </div>
 
        <div class="row">
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Current Items:</label><span>curr_items</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Total Items:</label><span>total_items</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Current Connections:</label><span>curr_connections</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Total Connections:</label><span>total_connections</span>
         </div>
        </div>
 
        <div class="row">
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Bytes:</label><span>bytes</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Get Commands:</label><span>cmd_get</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Set Commands:</label><span>cmd_set</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Peek Commands:</label><span>cmd_peek</span>
         </div>
        </div>
 
        <div class="row">
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Get Hits:</label><span>get_hits</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Get Misses:</label><span>get_misses</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Bytes Read:</label><span>bytes_read</span>
         </div>
-        <div class="yui3-u-1-4">
+        <div class="span3">
          <label>Bytes Written:</label><span>bytes_written</span>
         </div>
        </div>
