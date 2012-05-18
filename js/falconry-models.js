@@ -48,7 +48,7 @@ YUI.add('falconry-models', function(Y) {
             
             var parts = key.split("/");
             
-            if(!results.hasOwnProperty(parts[1])) {
+            if(!Y.Lang.isObject( results[ parts[1] ] )) {
               results[parts[1]] = { name : parts[1] };
             }
             results[parts[1]][parts[2]] = counters[key];
