@@ -43,7 +43,7 @@ YUI.add('falconry-models', function(Y) {
         var results = {};
 
         // Grab each of the counters
-        Y.Ojbect.each(counters, function(key, value)) {
+        Y.Object.each(counters, function(key, value) {
           if(key.substr(0, 2) == "q/") {
             
             var parts = key.split("/");
@@ -53,16 +53,16 @@ YUI.add('falconry-models', function(Y) {
             }
             results[parts[1]][parts[2]] = value;
           }
-        }
+        });
 
         // Grab each of the gauges
-        Y.Ojbect.each(gauges, function(key, value)) {
+        Y.Object.each(gauges, function(key, value) {
           if(key.substr(0, 2) == "q/") {
             var parts = key.split("/");
             
             results[parts[1]][parts[2]] = value;
           }
-        }
+        });
         
         Y.log(results);
     
