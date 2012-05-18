@@ -87,5 +87,6 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', '
 
   // Read http://yuilibrary.com/yui/docs/api/classes/ValueChange.html (this is a separate module that needs to be used)
   Y.one('#refresh').on('valueChange', setupPolling);
+  Y.one('#filter').on('valueChange', function(e) { list.set('filter', e.newVal); });
   setupPolling();
 });

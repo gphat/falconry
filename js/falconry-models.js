@@ -27,6 +27,7 @@ YUI.add('falconry-models', function(Y) {
     
     Y.QueueList = Y.Base.create('queueModelList', Y.ModelList, [], {
       url   : function() { return Y.one('#host').get('value'); },
+      initializer: function() { this.on('filterChange', this.load, this) },
       model : Y.QueueModel,
       parse : function(response) {
         if ( !Y.Lang.isObject(response) ) {
@@ -41,25 +42,32 @@ YUI.add('falconry-models', function(Y) {
 
         var results = {};
 
+        var re = new RegExp(this.get("filter"));
+
         // Grab each of the counters
         Y.Object.each(counters, function(value, key) {
           if(key.substr(0, 2) == "q/") {
             
-            var parts = key.split("/");
-            
-            if(!Y.Lang.isObject( results[ parts[1] ] )) {
-              results[parts[1]] = { name : parts[1] };
+            var parts = key.split("/"),
+                name  = parts[1];
+            if(re.test(name)) {
+              if(!Y.Lang.isObject( results[ parts[1] ] )) {
+                results[parts[1]] = { name : parts[1] };
+              }
+              results[parts[1]][parts[2]] = value;
             }
-            results[parts[1]][parts[2]] = value;
           }
         });
 
         // Grab each of the gauges
         Y.Object.each(gauges, function(value, key) {
           if(key.substr(0, 2) == "q/") {
-            var parts = key.split("/");
             
-            results[parts[1]][parts[2]] = value;
+            var parts = key.split("/"),
+                name  = parts[1];
+            if(re.test(name)) {
+              results[parts[1]][parts[2]] = value;
+            }
           }
         });
         
@@ -100,6 +108,10 @@ YUI.add('falconry-models', function(Y) {
                 }
             }
         });
+      }
+    }, {
+      ATTRS: {
+        filter: '.*'
       }
     });
 }, '0.1.0', {
