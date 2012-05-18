@@ -39,11 +39,10 @@ YUI.add('falconry-models', function(Y) {
         var counters = response.counters;
         var gauges = response.gauges;
 
-        Y.log(response);
         var results = {};
 
         // Grab each of the counters
-        Y.Object.each(counters, function(key, value) {
+        Y.Object.each(counters, function(value, key) {
           if(key.substr(0, 2) == "q/") {
             
             var parts = key.split("/");
@@ -56,7 +55,7 @@ YUI.add('falconry-models', function(Y) {
         });
 
         // Grab each of the gauges
-        Y.Object.each(gauges, function(key, value) {
+        Y.Object.each(gauges, function(value, key) {
           if(key.substr(0, 2) == "q/") {
             var parts = key.split("/");
             
@@ -64,8 +63,6 @@ YUI.add('falconry-models', function(Y) {
           }
         });
         
-        Y.log(results);
-    
         return Y.Object.values( results );
       },
 
