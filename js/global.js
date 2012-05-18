@@ -1,5 +1,4 @@
 YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', 'event-valuechange', function(Y) {
-  Y.log( Y.QueueList );
 
   function bytesToHuman(o)  {  
     var precision = 0;

@@ -92,7 +92,6 @@ YUI.add('falconry-models', function(Y) {
         Y.jsonp(query, {
             on: {
                 success : function(r){
-                    Y.log(r);
                     if (r.error) {
                         callback(r.error, r);
                     } else {

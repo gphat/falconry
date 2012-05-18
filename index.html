@@ -10,14 +10,13 @@
   <h1>Falconry</h1>
   <h2>Queues</h2>
   <div class="well">
-   <form class="form-inline">
+   <form class="form-inline" style="margin-bottom: 0">
     <fieldset>
      <input type="text" id="host" name="host" value="http://127.0.0.1:2223/stats.json">
      filtered by
      <input type="text" id="filter" name="filter" placeholder="foo*">
      every
      <input type="text" id="refresh" name="refresh" value="5">(s)
-     <button class="btn btn-primary" type="submit">Submit</button>
     </fieldset>
    </form>
   </div>
@@ -88,39 +87,11 @@
       </div>
      </div>
      <h2>Features</h2>
-     <ul>   
+     <ul>
       <li>signal refreshing</li>
       <li>sparklines</li>
       <li>footer with totals</li>
      </ul>
-     <h2>A Form</h2>
-     <form>
-      <fieldset>
-       <div class="field yui3-g">
-        <div class="yui3-u-1-8">
-         <label>A Label</label>
-        </div>
-        <div class="yui3-u-7-8">
-         <input type="text">
-        </div>
-       </div>
-       <div class="field yui3-g">
-        <div class="yui3-u-1-8">
-         <label>Another Label</label>
-        </div>
-        <div class="yui3-u-7-8">
-         <input type="text" class="wide">
-        </div>
-       </div>
-       <div class="field submit yui3-g">
-        <div class="yui3-u-1-8">
-         <a class="button mute">Cancel</a>
-        </div>
-        <div class="yui3-u-7-8">
-         <input type="submit" value="Submit">
-        </div>
-       </div>
-      </fieldset>
-     </form>
  </body>
+ <!-- Y.Array.reduce( list.get('total_items'), 0, function(val, cur) { return val + cur; }); -->
 </html>
