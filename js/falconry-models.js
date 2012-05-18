@@ -29,15 +29,15 @@ YUI.add('falconry-models', function(Y) {
       url   : function() { return Y.one('#host').get('value'); },
       model : Y.QueueModel,
       parse : function(response) {
-
         if ( !Y.Lang.isObject(response) ) {
           response = QueueList.superclass.parse.apply(this, response);
         }
+
         // Response is guaranteed to be an object now (or should be)
         // the superclass will call the JSON parsing.
  
-        var counters = response['counters'];
-        var gauges = response['gauges'];
+        var counters = response.counters;
+        var gauges = response.gauges;
 
         var results = {};
 
@@ -62,8 +62,10 @@ YUI.add('falconry-models', function(Y) {
             results[parts[1]][parts[2]] = gauges[key];
           }
         }
+        
+        Y.log(results);
     
-        return results;
+        return Y.Object.values( results );
       },
 
       buildQuery : function(options) {
@@ -79,28 +81,13 @@ YUI.add('falconry-models', function(Y) {
             return callback(null);
         }
 
-        var query   = this.buildQuery(options),
-            cache   = this.cache,
-            results = cache && cache.retrieve(query);
+        var query   = this.buildQuery(options);
 
-        // Return cached results if we got ’em.
-        if (results) {
-            return callback(null, results.response);
-        }
-
-        Y.log('Query: ' + query);
         Y.jsonp(query, function(r){
             if (r.error) {
                 callback(r.error, r);
             } else {
-                results = r.query.results;
-
-                // Cache the results.
-                if (cache && results) {
-                    cache.add(query, results);
-                }
-
-                callback(null, results);
+                callback(null, r);
             }
         });
       }
