@@ -84,11 +84,23 @@ YUI.add('falconry-models', function(Y) {
 
         var query   = this.buildQuery(options);
 
-        Y.jsonp(query, function(r){
-            if (r.error) {
-                callback(r.error, r);
-            } else {
-                callback(null, r);
+        Y.jsonp(query, {
+            on: {
+                success : function(r){
+                    Y.log(r);
+                    if (r.error) {
+                        callback(r.error, r);
+                    } else {
+                        callback(null, r);
+                    }
+                },
+                failure : function(o) {
+                    // Extract the individual error text and return as an array
+                    callback( Y.Array.map( o.errors, function(err) { return err.error; } ), null);
+                },
+                timeout : function(o) {
+                    callback( Y.Array.map( o.errors, function(err) { return err.error; } ), null);
+                }
             }
         });
       }

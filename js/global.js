@@ -49,8 +49,14 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', '
     { key: "journal_size", label: "Journal Size", sortable: true, formatter: bytesToHuman }
   ];
   
+  function handleKestrelError(e) {
+    Y.log('Kestrel is in an error state');
+    Y.log(e.error); // Most likely an array of fail.
+  }
+
   var list = new Y.QueueList();
-  list.load( function(err) { Y.log(Y.JSON.stringify(err)); Y.log(list.toJSON()); });
+  list.on('error', handleKestrelError);
+  list.load();
   
   var table = new Y.DataTable.Base({
     columns: cols,
@@ -58,7 +64,6 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', '
     data: list
   });
   table.TABLE_TEMPLATE = '<table cellspacing="0" class="{className} table table-bordered table-striped"/>'
-
   table.render("#data");
   
   var timer;
