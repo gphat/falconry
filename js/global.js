@@ -67,6 +67,7 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', '
   
   var kestrel = new Y.KestrelModel();
   kestrel.load();
+  Y.log(kestrel);
   
   var timer;
 
@@ -84,11 +85,25 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', '
         return;
       }
     }
-    timer = Y.later( interval, list, function() { list.load, kestrel.load }, null, true );
+    timer = Y.later( interval, list, function() { list.load(); kestrel.load() }, null, true );
+  }
+  
+  function updateKestrel(e) {
+    Y.log("Refreshing global panel");
+
+    Y.Object.each( kestrel.getAttrs(), function(value, name) {
+      var node = Y.one("#" + name);
+      if(node == null) {
+        Y.log("Could not find node for " + name);
+      } else {
+        node.setHTML(value);
+      }
+    });
   }
 
   // Read http://yuilibrary.com/yui/docs/api/classes/ValueChange.html (this is a separate module that needs to be used)
   Y.one('#refresh').on('valueChange', setupPolling);
   Y.one('#filter').on('valueChange', function(e) { list.set('filter', e.newVal); });
+  kestrel.on('change', updateKestrel);
   setupPolling();
 });

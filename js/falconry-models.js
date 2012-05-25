@@ -40,7 +40,6 @@ YUI.add('falconry-models', function(Y) {
           response = Y.KestrelModel.superclass.parse.apply(this, response);
         }
 
-        Y.log(response);
         // Response is guaranteed to be an object now (or should be)
         // the superclass will call the JSON parsing.
         var counters = response.counters;
@@ -54,7 +53,9 @@ YUI.add('falconry-models', function(Y) {
           // front, as we're not worried about those.
           if(key.substr(0, 2) != "q/") {
 
-            results[key] = value;
+            if(key.substr(0, 7) != "kestrel") {
+              results[key] = value;
+            }
           }
         });
 
@@ -68,8 +69,7 @@ YUI.add('falconry-models', function(Y) {
             }
           }
         });
-
-        return Y.Object.values( results );
+        return results;
       }
     }, {
       ATTRS: {
@@ -83,6 +83,8 @@ YUI.add('falconry-models', function(Y) {
         bytes                     : null,
         connections               : null,
         items                     : null,
+        cmd_get                   : null,
+        cmd_set                   : null,
         jvm_fd_count              : null,
         jvm_fd_limit              : null,
         jvm_heap_committed        : null,
@@ -102,13 +104,15 @@ YUI.add('falconry-models', function(Y) {
         jvm_thread_daemon_count   : null,
         jvm_thread_peak_count     : null,
         jvm_uptime                : null,
-        kestrel_memcache_connections: null,
-        kestrel_memcache_pending  : null,
-        kestrel_text_connections  : null,
-        kestrel_text_pending      : null,
-        kestrel_thrift_connections: null,
-        kestrel_thrift_pending    : null,
-        reserved_memory_ratio     : null
+        // kestrel_memcache_connections: null,
+        // kestrel_memcache_pending  : null,
+        // kestrel_text_connections  : null,
+        // kestrel_text_pending      : null,
+        // kestrel_thrift_connections: null,
+        // kestrel_thrift_pending    : null,
+        reserved_memory_ratio     : null,
+        total_connections         : null,
+        total_items               : null
       }
     });
 
