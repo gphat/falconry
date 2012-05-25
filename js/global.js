@@ -65,6 +65,9 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', '
   table.TABLE_TEMPLATE = '<table cellspacing="0" class="{className} table table-bordered table-striped"/>'
   table.render("#data");
   
+  var kestrel = new Y.KestrelModel();
+  kestrel.load();
+  
   var timer;
 
   function setupPolling(e) {
@@ -81,7 +84,7 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', '
         return;
       }
     }
-    timer = Y.later( interval, list, list.load, null, true );
+    timer = Y.later( interval, list, function() { list.load, kestrel.load }, null, true );
   }
 
   // Read http://yuilibrary.com/yui/docs/api/classes/ValueChange.html (this is a separate module that needs to be used)
