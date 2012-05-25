@@ -5,39 +5,39 @@ YUI.add('falconry-models', function(Y) {
       url   : function() { return Y.one('#host').get('value'); },
       parse : function(response) {
         if ( !Y.Lang.isObject(response) ) {
-          response = KestrelModel.superclass.parse.apply(this, response);
+          response = Y.KestrelModel.superclass.parse.apply(this, response);
+        }
+        // Response is guaranteed to be an object now (or should be)
+        // the superclass will call the JSON parsing.
+        Y.log(response)
 
-          // Response is guaranteed to be an object now (or should be)
-          // the superclass will call the JSON parsing.
+        var counters = response.counters;
+        var gauges = response.gauges;
 
-          var counters = response.counters;
-          var gauges = response.gauges;
+        var results = {};
 
-          var results = {};
+        // Grab each of the counters
+        Y.Object.each(counters, function(value, key) {
+          // We want to exclude anything that has a queue marker on the
+          // front, as we're not worried about those.
+          if(key.substr(0, 2) != "q/") {
 
-          // Grab each of the counters
-          Y.Object.each(counters, function(value, key) {
-            // We want to exclude anything that has a queue marker on the
-            // front, as we're not worried about those.
-            if(key.substr(0, 2) != "q/") {
+            results[key] = value;
+          }
+        });
 
+        // Grab each of the gauges
+        Y.Object.each(gauges, function(value, key) {
+          if(key.substr(0, 2) != "q/") {
+
+            // Skip these problematic names fttb
+            if(key.substr(0, 7) != "kestrel") {
               results[key] = value;
             }
-          });
+          }
+        });
 
-          // Grab each of the gauges
-          Y.Object.each(gauges, function(value, key) {
-            if(key.substr(0, 2) != "q/") {
-
-              // Skip these problematic names fttb
-              if(key.substr(0, 7) != "kestrel") {
-                results[key] = value;
-              }
-            }
-          });
-
-          return Y.Object.values( results );
-        }
+        return Y.Object.values( results );
       }
     }, {
       ATTRS: {
