@@ -1,16 +1,48 @@
 YUI.add('falconry-models', function(Y) {
-    var isFunction = Y.Lang.isFunction;
+    var
+      isFunction = Y.Lang.isFunction,
+      jsonpSync = function (action, options, callback) {
+        isFunction(callback) || (callback = noop);
+        // Only read is supported.
+        if (action !== 'read') {
+            // TODO: return some error dingus here.
+            return callback(null);
+        }
+
+        var query = Y.Lang.isFunction( this.buildQuery ) ?
+            this.buildQuery(options) : this.url();
+
+        Y.jsonp(query, {
+            on: {
+                success : function(r){
+                    if (r.error) {
+                        callback(r.error, r);
+                    } else {
+                        callback(null, r);
+                    }
+                },
+                failure : function(o) {
+                    // Extract the individual error text and return as an array
+                    callback( Y.Array.map( o.errors, function(err) { return err.error; } ), null);
+                },
+                timeout : function(o) {
+                    callback( Y.Array.map( o.errors, function(err) { return err.error; } ), null);
+                }
+            }
+        });
+      };
 
     Y.KestrelModel = Y.Base.create('kestrelModel', Y.Model, [ ], {
       url   : function() { return Y.one('#host').get('value'); },
+      sync  : jsonpSync,
       parse : function(response) {
         if ( !Y.Lang.isObject(response) ) {
           response = Y.KestrelModel.superclass.parse.apply(this, response);
         }
+
+        Y.log(response);
         // Response is guaranteed to be an object now (or should be)
         // the superclass will call the JSON parsing.
-        Y.log(response)
-
         var counters = response.counters;
         var gauges = response.gauges;
 
@@ -110,7 +142,7 @@ YUI.add('falconry-models', function(Y) {
       model : Y.QueueModel,
       parse : function(response) {
         if ( !Y.Lang.isObject(response) ) {
-          response = QueueList.superclass.parse.apply(this, response);
+          response = Y.QueueList.superclass.parse.apply(this, response);
         }
 
         // Response is guaranteed to be an object now (or should be)
@@ -158,35 +190,7 @@ YUI.add('falconry-models', function(Y) {
         return this.url();
       },
 
-      sync : function (action, options, callback) {
-        isFunction(callback) || (callback = noop);
-        // Only read is supported.
-        if (action !== 'read') {
-            // TODO: return some error dingus here.
-            return callback(null);
-        }
-
-        var query   = this.buildQuery(options);
-
-        Y.jsonp(query, {
-            on: {
-                success : function(r){
-                    if (r.error) {
-                        callback(r.error, r);
-                    } else {
-                        callback(null, r);
-                    }
-                },
-                failure : function(o) {
-                    // Extract the individual error text and return as an array
-                    callback( Y.Array.map( o.errors, function(err) { return err.error; } ), null);
-                },
-                timeout : function(o) {
-                    callback( Y.Array.map( o.errors, function(err) { return err.error; } ), null);
-                }
-            }
-        });
-      }
+      sync : jsonpSync
     }, {
       ATTRS: {
         filter: '.*'
