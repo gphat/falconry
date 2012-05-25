@@ -5,9 +5,47 @@
   <script src="js/config.js"></script>
   <script src="js/global.js"></script>
   <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+  <style>
+  .row {
+    margin-bottom: 5px;
+  }
+  span.uneditable-input {
+    -webkit-transition: all .5s ease-in;
+    -moz-transition: all .5s ease-in;
+    -ms-transition: all .5s ease-in;
+    -o-transition: all .5s ease-in;
+    transition: all .5s ease-in;
+    border-color: #ddd;
+  }
+  span.updated {
+    -webkit-transition: all .15s ease-in;
+    -moz-transition: all .15s ease-in;
+    -ms-transition: all .15s ease-in;
+    -o-transition: all .15s ease-in;
+    transition: all .15s ease-in;
+    border-color: rgba(82, 168, 236, 0.8);
+    outline: 0;
+    outline: thin dotted 9;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  }
+  </style>
  </head>
  <body>
-  <h1>Falconry</h1>
+   <div class="navbar navbar-fixed-top">
+     <div class="navbar-inner">
+       <div class="container">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+         </a>
+         <a class="brand" href="#">Falconry</a>
+       </div>
+     </div>
+  </div>
+  <div class="container">
   <h2>Queues</h2>
   <div class="well">
    <form class="form-inline" style="margin-bottom: 0">
@@ -21,92 +59,97 @@
    </form>
   </div>
   <div id="data" class=""></div>
-     <div class="">
-      <h2>Global Stats</h2>
-      <div class="yui3-g global">
+   <div class="">
+    <h2>Global Stats</h2>
+    <div class="yui3-g global">
 
-       <div class="row">
-        <div class="span3">
-         <label>Version:</label><span>XXX</span>
-        </div>
-        <div class="span3">
-         <label>Uptime:</label><span>XXX</span>
-        </div>
-        <div class="span3">
-         <label>Queues Created:</label><span id="queue_creates"></span>
-        </div>
-        <div class="span3">
-         <label>Queues Deleted:</label><span id="queue_deletes"></span>
-        </div>
-       </div>
-
-       <div class="row">
-        <div class="span3">
-         <label>Current Items:</label><span id="items"></span>
-        </div>
-        <div class="span3">
-         <label>Total Items:</label><span id="total_items"></span>
-        </div>
-        <div class="span3">
-         <label>Current Connections:</label><span id="connections"></span>
-        </div>
-        <div class="span3">
-         <label>Total Connections:</label><span id="total_connections"></span>
-        </div>
-       </div>
-
-       <div class="row">
-        <div class="span3">
-         <label>Bytes:</label><span id="bytes"></span>
-        </div>
-        <div class="span3">
-         <label>Get Commands:</label><span id="cmd_get"></span>
-        </div>
-        <div class="span3">
-         <label>Set Commands:</label><span id="cmd_set"></span>
-        </div>
-        <div class="span3">
-         <label>Peek Commands:</label><span id="cmd_peek"></span>
-        </div>
-       </div>
-
-       <div class="row">
-        <div class="span3">
-         <label>Get Hits:</label><span>get_hits</span>
-        </div>
-        <div class="span3">
-         <label>Get Misses:</label><span id="get_misses"></span>
-        </div>
-        <div class="span3">
-         <label>Bytes Read:</label><span id="bytes_read"></span>
-        </div>
-        <div class="span3">
-         <label>Bytes Written:</label><span id="bytes_written"></span>
-        </div>
-       </div>
-
-       <div class="row">
-        <div class="span3">
-         <label>Get Timeout Dropped:</label><span id="cmd_get_timeout_dropped"></span>
-        </div>
-        <div class="span3">
-         <label>Get Open Dropped:</label><span id="cmd_get_open_dropped"></span>
-        </div>
-        <div class="span3">
-         <label>XXX:</label><span id=""></span>
-        </div>
-        <div class="span3">
-         <label>XXX:</label><span id=""></span>
-        </div>
-       </div>
+     <div class="row">
+      <div class="span3">
+       <label>Version:</label><span class="uneditable-input input-small">XXX</span>
+      </div>
+      <div class="span3">
+       <label>Uptime:</label><span class="uneditable-input input-small">XXX</span>
+      </div>
+      <div class="span3">
+       <label>Queues Created:</label><span class="uneditable-input input-small" id="queue_creates"></span>
+      </div>
+      <div class="span3">
+       <label>Queues Deleted:</label><span class="uneditable-input input-small" id="queue_deletes"></span>
       </div>
      </div>
+
+     <div class="row">
+      <div class="span3">
+       <label>Current Items:</label><span class="uneditable-input input-small" id="items"></span>
+      </div>
+      <div class="span3">
+       <label>Total Items:</label><span class="uneditable-input input-small" id="total_items"></span>
+      </div>
+      <div class="span3">
+       <label>Current Connections:</label><span class="uneditable-input input-small" id="connections"></span>
+      </div>
+      <div class="span3">
+       <label>Total Connections:</label><span class="uneditable-input input-small" id="total_connections"></span>
+      </div>
+     </div>
+
+     <div class="row">
+      <div class="span3">
+       <label>Bytes:</label><span class="uneditable-input input-small" id="bytes"></span>
+      </div>
+      <div class="span3">
+       <label>Get Commands:</label><span class="uneditable-input input-small" id="cmd_get"></span>
+      </div>
+      <div class="span3">
+       <label>Set Commands:</label><span class="uneditable-input input-small" id="cmd_set"></span>
+      </div>
+      <div class="span3">
+       <label>Peek Commands:</label><span class="uneditable-input input-small" id="cmd_peek"></span>
+      </div>
+     </div>
+
+     <div class="row">
+      <div class="span3">
+       <label>Get Hits:</label><span class="uneditable-input input-small" id="get_hits"></span>
+      </div>
+      <div class="span3">
+       <label>Get Misses:</label><span class="uneditable-input input-small" id="get_misses"></span>
+      </div>
+      <div class="span3">
+       <label>Bytes Read:</label><span class="uneditable-input input-small" id="bytes_read"></span>
+      </div>
+      <div class="span3">
+       <label>Bytes Written:</label><span class="uneditable-input input-small" id="bytes_written"></span>
+      </div>
+     </div>
+
+     <div class="row">
+      <div class="span3">
+       <label>Get Timeout Dropped:</label><span class="uneditable-input input-small" id="cmd_get_timeout_dropped"></span>
+      </div>
+      <div class="span3">
+       <label>Get Open Dropped:</label><span class="uneditable-input input-small" id="cmd_get_open_dropped"></span>
+      </div>
+      <div class="span3">
+       <label>XXX:</label><span class="uneditable-input input-small" id=""></span>
+      </div>
+      <div class="span3">
+       <label>XXX:</label><span class="uneditable-input input-small" id=""></span>
+      </div>
+     </div>
+    </div>
+   </div>
      <h2>Features</h2>
      <ul>
       <li>signal refreshing</li>
       <li>sparklines</li>
       <li>footer with totals</li>
      </ul>
+     <hr>
+     <footer>
+      <p>Copyright &copy; 2012 Infinity Interactive, Inc</p>
+     </footer>
+  </div>
  </body>
  <!-- Y.Array.reduce( list.get('total_items'), 0, function(val, cur) { return val + cur; }); -->
 </html>

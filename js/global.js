@@ -96,7 +96,14 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', '
       if(node == null) {
         Y.log("Could not find node for " + name);
       } else {
-        node.setHTML(value);
+        eVal = node.getHTML();
+        // if(eVal != value) {
+          node.setHTML(value);
+          node.addClass("updated");
+          Y.later(250, node, function(e) { Y.log("asdasd"); node.removeClass("updated") }, null, false);
+        // } else {
+        //   Y.log("No need to change" + name + ", no change");
+        // }
       }
     });
   }
