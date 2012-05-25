@@ -97,13 +97,11 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', '
         Y.log("Could not find node for " + name);
       } else {
         eVal = node.getHTML();
-        // if(eVal != value) {
+        if(eVal != value) {
           node.setHTML(value);
           node.addClass("updated");
           Y.later(250, node, function(e) { Y.log("asdasd"); node.removeClass("updated") }, null, false);
-        // } else {
-        //   Y.log("No need to change" + name + ", no change");
-        // }
+        }
       }
     });
   }
