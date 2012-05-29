@@ -65,9 +65,6 @@
 
      <div class="row">
       <div class="span3">
-       <label>Version:</label><span class="uneditable-input input-small">XXX</span>
-      </div>
-      <div class="span3">
        <label>Uptime:</label><span class="uneditable-input input-small">XXX</span>
       </div>
       <div class="span3">
@@ -78,19 +75,23 @@
        <label>Queues Deleted:<a href="#" title="Count of queues deleted since Kestrel was started."><i class="icon-question-sign"></i></a></label>
        <span class="uneditable-input input-small" id="queue_deletes"></span>
       </div>
+      <div class="span3">
+       <label>Queues Expired:<a href="#" title="Count of queues expired since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="queue_expires"></span>
+      </div>
      </div>
 
      <div class="row">
       <div class="span3">
-       <label>Current Items:<a href="#" title="Total number of items currently enqueued."><i class="icon-question-sign"></i></a></label>
+       <label>Current Items:<a href="#" title="Total count of items waiting in all queues."><i class="icon-question-sign"></i></a></label>
        <span class="uneditable-input input-small" id="items"></span>
       </div>
       <div class="span3">
-       <label>Total Items:<a href="#" title="Total number of items enqueued since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <label>Total Items:<a href="#" title="Total count of items enqueued since Kestrel was started."><i class="icon-question-sign"></i></a></label>
        <span class="uneditable-input input-small" id="total_items"></span>
       </div>
       <div class="span3">
-       <label>Current Connections:<a href="#" title="Current count of open connections."><i class="icon-question-sign"></i></a></label>
+       <label>Current Connections:<a href="#" title="Current count of open connections from clients."><i class="icon-question-sign"></i></a></label>
        <span class="uneditable-input input-small" id="connections"></span>
       </div>
       <div class="span3">
@@ -101,7 +102,7 @@
 
      <div class="row">
       <div class="span3">
-       <label>Bytes:<a href="#" title="Total count of GET commands issued since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <label>Bytes:<a href="#" title="Total byte size of items waiting in all queues."><i class="icon-question-sign"></i></a></label>
        <span class="uneditable-input input-small" id="bytes"></span>
       </div>
       <div class="span3">
@@ -120,24 +121,27 @@
 
      <div class="row">
       <div class="span3">
-       <label>Get Hits:<a href="#" title="Total number of GET commands that resulted in a returned item since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <label>Get Hits:<a href="#" title="Total count of GET commands that resulted in a returned item since Kestrel was started."><i class="icon-question-sign"></i></a></label>
        <span class="uneditable-input input-small" id="get_hits"></span>
       </div>
       <div class="span3">
-       <label>Get Misses:<a href="#" title="Total number of GET commands that had no item to return since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <label>Get Misses:<a href="#" title="Total count of GET commands that had no item to return since Kestrel was started."><i class="icon-question-sign"></i></a></label>
        <span class="uneditable-input input-small" id="get_misses"></span>
       </div>
       <div class="span3">
-       <label>Bytes Read:</label><span class="uneditable-input input-small" id="bytes_read"></span>
+       <label>Bytes Read:<a href="#" title="Total bytes read from clients since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="bytes_read"></span>
       </div>
       <div class="span3">
-       <label>Bytes Written:</label><span class="uneditable-input input-small" id="bytes_written"></span>
+       <label>Bytes Written:<a href="#" title="Total bytes written to clients since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="bytes_written"></span>
       </div>
      </div>
 
      <div class="row">
       <div class="span3">
-       <label>Get Timeout Dropped:</label><span class="uneditable-input input-small" id="cmd_get_timeout_dropped"></span>
+       <label>Get Timeout Dropped:<a href="#" title="Total count of GET commands ended because their timeout arrived before an item did since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="cmd_get_timeout_dropped"></span>
       </div>
       <div class="span3">
        <label>Get Open Dropped:</label><span class="uneditable-input input-small" id="cmd_get_open_dropped"></span>
@@ -156,6 +160,7 @@
       <li>more help text</li>
       <li>sparklines</li>
       <li>footer with totals</li>
+      <li>Stats: queue_expired</li>
      </ul>
      <hr>
      <footer>
