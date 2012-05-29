@@ -71,49 +71,61 @@
        <label>Uptime:</label><span class="uneditable-input input-small">XXX</span>
       </div>
       <div class="span3">
-       <label>Queues Created:</label><span class="uneditable-input input-small" id="queue_creates"></span>
+       <label>Queues Created:<a href="#" title="Count of queues created since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="queue_creates"></span>
       </div>
       <div class="span3">
-       <label>Queues Deleted:</label><span class="uneditable-input input-small" id="queue_deletes"></span>
-      </div>
-     </div>
-
-     <div class="row">
-      <div class="span3">
-       <label>Current Items:</label><span class="uneditable-input input-small" id="items"></span>
-      </div>
-      <div class="span3">
-       <label>Total Items:</label><span class="uneditable-input input-small" id="total_items"></span>
-      </div>
-      <div class="span3">
-       <label>Current Connections:</label><span class="uneditable-input input-small" id="connections"></span>
-      </div>
-      <div class="span3">
-       <label>Total Connections:</label><span class="uneditable-input input-small" id="total_connections"></span>
+       <label>Queues Deleted:<a href="#" title="Count of queues deleted since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="queue_deletes"></span>
       </div>
      </div>
 
      <div class="row">
       <div class="span3">
-       <label>Bytes:</label><span class="uneditable-input input-small" id="bytes"></span>
+       <label>Current Items:<a href="#" title="Total number of items currently enqueued."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="items"></span>
       </div>
       <div class="span3">
-       <label>Get Commands:</label><span class="uneditable-input input-small" id="cmd_get"></span>
+       <label>Total Items:<a href="#" title="Total number of items enqueued since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="total_items"></span>
       </div>
       <div class="span3">
-       <label>Set Commands:</label><span class="uneditable-input input-small" id="cmd_set"></span>
+       <label>Current Connections:<a href="#" title="Current count of open connections."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="connections"></span>
       </div>
       <div class="span3">
-       <label>Peek Commands:</label><span class="uneditable-input input-small" id="cmd_peek"></span>
+       <label>Total Connections:<a href="#" title="Total count of connections handled since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="total_connections"></span>
       </div>
      </div>
 
      <div class="row">
       <div class="span3">
-       <label>Get Hits:</label><span class="uneditable-input input-small" id="get_hits"></span>
+       <label>Bytes:<a href="#" title="Total count of GET commands issued since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="bytes"></span>
       </div>
       <div class="span3">
-       <label>Get Misses:</label><span class="uneditable-input input-small" id="get_misses"></span>
+       <label>Get Commands:<a href="#" title="Total count of GET commands issued since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="cmd_get"></span>
+      </div>
+      <div class="span3">
+       <label>Set Commands:<a href="#" title="Total count of SET commands issued since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="cmd_set"></span>
+      </div>
+      <div class="span3">
+       <label>Peek Commands:<a href="#" title="Total count of PEEK commands issued since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="cmd_peek"></span>
+      </div>
+     </div>
+
+     <div class="row">
+      <div class="span3">
+       <label>Get Hits:<a href="#" title="Total number of GET commands that resulted in a returned item since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="get_hits"></span>
+      </div>
+      <div class="span3">
+       <label>Get Misses:<a href="#" title="Total number of GET commands that had no item to return since Kestrel was started."><i class="icon-question-sign"></i></a></label>
+       <span class="uneditable-input input-small" id="get_misses"></span>
       </div>
       <div class="span3">
        <label>Bytes Read:</label><span class="uneditable-input input-small" id="bytes_read"></span>
@@ -141,7 +153,7 @@
    </div>
      <h2>Features</h2>
      <ul>
-      <li>help text</li>
+      <li>more help text</li>
       <li>sparklines</li>
       <li>footer with totals</li>
      </ul>
