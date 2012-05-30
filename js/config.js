@@ -12,6 +12,10 @@ YUI_config = {
         'falconry-models' : {
           path : 'falconry-models.js',
           requires : [ 'model', 'model-list', 'jsonp', 'jsonp-url' ]
+        },
+        'falconry' : {
+          path : 'app.js',
+          requires : [ 'app', 'falconry-models', 'datasource', 'datatable-base', 'datatable-sort', 'event-valuechange' ]
         }
       }
     }
