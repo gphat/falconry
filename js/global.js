@@ -57,9 +57,8 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', '
   list.on('error', handleKestrelError);
   list.load();
   
-  var table = new Y.DataTable.Base({
+  var table = new Y.DataTable({
     columns: cols,
-    plugins: [ Y.Plugin.DataTableSort ],
     data: list
   });
   table.TABLE_TEMPLATE = '<table cellspacing="0" class="{className} table table-bordered table-striped"/>'
