@@ -99,7 +99,7 @@ YUI().use('falconry-models', 'datasource', 'datatable-base', 'datatable-sort', '
         if(eVal != value) {
           node.setHTML(value);
           node.addClass("updated");
-          Y.later(250, node, function(e) { Y.log("asdasd"); node.removeClass("updated") }, null, false);
+          Y.later(250, node, function(e) { node.removeClass("updated") }, null, false);
         }
       }
     });
